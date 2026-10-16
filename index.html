@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Đọc Hiểu - Lớp 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50E3C2;
+            --accent-color: #FF6B6B;
+            --bg-color: #F0F4F8;
+            --card-bg: #FFFFFF;
+            --text-color: #2C3E50;
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4A90E2, #357ABD);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .screen {
+            display: none;
+            padding: 30px 25px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .welcome-card {
+            background: #EBF3FB;
+            border-left: 6px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-card h3 {
+            color: #2C3E50;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+
+        .welcome-info-list {
+            list-style: none;
+        }
+
+        .welcome-info-list li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .welcome-info-list strong {
+            color: #1A5276;
+        }
+
+        .btn-start {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #2ECC71, #27AE60);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+            text-align: center;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+        }
+
+        .quiz-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #F8F9F9;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #E5E8E8;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .timer-box {
+            color: #C0392B;
+            background: #FDEDEC;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #FADBD8;
+        }
+
+        .passage-box {
+            background: #FDFEFE;
+            border: 2px dashed #AED6F1;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .passage-box h3 {
+            color: #2980B9;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .passage-content {
+            font-size: 1.05rem;
+            white-space: pre-line;
+            color: #34495E;
+            line-height: 1.7;
+        }
+
+        .question-card {
+            background: #FFFFFF;
+            border: 1px solid #D6DBDF;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2C3E50;
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #F4F6F7;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #D5D8DC;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            font-size: 1.05rem;
+        }
+
+        .option-label:hover {
+            background: #EAF2F8;
+            border-color: #AED6F1;
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #3498DB, #2980B9);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #2980B9, #1F618D);
+        }
+
+        .result-summary {
+            background: linear-gradient(135deg, #E8F8F5, #D4EFDF);
+            border: 2px solid #A3E4D7;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .result-summary h2 {
+            color: #117A65;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .score-highlight {
+            font-size: 2.5rem;
+            color: #C0392B;
+            font-weight: 700;
+            margin: 10px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .result-details-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            text-align: left;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1rem;
+            border: 1px solid #A3E4D7;
+        }
+
+        .detail-item strong {
+            color: #117A65;
+        }
+
+        .history-card {
+            background: #FFFFFF;
+            border: 1px solid #D5D8DC;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .history-card.correct {
+            border-left: 6px solid #27AE60;
+            background: #F9EBEA;
+        }
+
+        .history-card.incorrect {
+            border-left: 6px solid #C0392B;
+            background: #FBEEE6;
+        }
+
+        .history-q-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .history-ans-info {
+            font-size: 0.98rem;
+            margin-bottom: 5px;
+        }
+
+        .explanation-box {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #FEF9E7;
+            border: 1px dashed #F9E79F;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: #7D6608;
+        }
+
+        .btn-restart {
+            display: block;
+            width: 100%;
+            background: #8E44AD;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background 0.2s;
+        }
+
+        .btn-restart:hover {
+            background: #732D91;
+        }
+
+        @media (max-width: 600px) {
+            .result-details-info {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .container {
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+            .screen {
+                padding: 15px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1 id="main-title">KIỂM TRA ĐỌC HIỂU LỚP 3</h1>
+        <p>Hệ thống ôn tập kiến thức tiếng Việt</p>
+    </div>
+
+    <div id="screen-welcome" class="screen active">
+        <div class="welcome-card">
+            <h3><strong>Thông tin bài kiểm tra</strong></h3>
+            <ul class="welcome-info-list">
+                <li>📌 <strong>Tên bài ôn tập:</strong> <span id="lbl-test-name">Đọc hiểu văn bản</span></li>
+                <li>👩‍🎓 <strong>Học sinh:</strong> Cẩm Tiên</li>
+                <li>📚 <strong>Nội dung:</strong> Đọc hiểu văn bản và trả lời câu hỏi trắc nghiệm</li>
+                <li>❓ <strong>Số câu hỏi:</strong> 10 câu trắc nghiệm</li>
+                <li>⏱️ <strong>Thời gian làm bài:</strong> 30 phút</li>
+            </ul>
+        </div>
+        <button class="btn-start" onclick="startQuiz()">BẮT ĐẦU LÀM BÀI</button>
+    </div>
+
+    <div id="screen-quiz" class="screen">
+        <div class="quiz-top-bar">
+            <span id="quiz-badge-title">Bài Đọc Hiểu</span>
+            <div class="timer-box">⏱️ <span id="timer">30:00</span></div>
+        </div>
+
+        <div class="passage-box">
+            <h3 id="passage-heading">Đọc bài văn sau:</h3>
+            <div class="passage-content" id="passage-text"></div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <button class="btn-submit" onclick="submitQuiz()">NỘP BÀI VÀ XEM KẾT QUẢ</button>
+    </div>
+
+    <div id="screen-result" class="screen">
+        <div class="result-summary">
+            <h2>KẾT QUẢ BÀI LÀM</h2>
+            <div class="score-highlight" id="res-score">10 / 10</div>
+            <p id="res-comment">Tuyệt vời! Con đã hoàn thành xuất sắc bài làm.</p>
+            
+            <div class="result-details-info">
+                <div class="detail-item"><strong>Học sinh:</strong> Cẩm Tiên</div>
+                <div class="detail-item"><strong>Bài kiểm tra:</strong> <span id="res-test-name"></span></div>
+                <div class="detail-item"><strong>Giờ vào làm:</strong> <span id="res-time-start"></span></div>
+                <div class="detail-item"><strong>Giờ nộp bài:</strong> <span id="res-time-end"></span></div>
+                <div class="detail-item" style="grid-column: span 2;"><strong>Tổng thời gian làm bài:</strong> <span id="res-total-time"></span></div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 15px; color: #2C3E50;">📜 Lịch sử chi tiết bài làm & Lời giải:</h3>
+        <div id="history-container"></div>
+
+        <button class="btn-restart" onclick="location.reload()">LÀM BÀI ÔN TẬP KHÁC</button>
+    </div>
+</div>
+
+<script>
+    // URL Web App Google Apps Script của bạn (Hãy dán link nhận được vào đây)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbygwo-zcaHgl8rS3USkJ3s7UosXv-DVc73DNY6a06mm-UZvN51tLKAdyXYJsTTz3Y9vnA/exec";
+
+    const dataBank = [
+        {
+            title: "Bài số 1: Người mẹ hiền",
+            passage: `Giờ ra chơi, Minh thì thầm với Nam: "Ngoài phố có gánh xiếc, bọn mình ra xem đi!". Nghe vậy, Nam không nén nổi tò mò. Nhưng cổng trường khóa, trốn ra sao được. Minh bảo:
+- Tớ biết có một chỗ tường thủng.
+Hết giờ ra chơi, hai em đã ở bên bức tường. Minh chui đầu ra. Nam đẩy Minh lọt ra ngoài. Đang đến lượt Nam cố lách ra thì bác bảo vệ vừa tới, nắm chặt hai chân em: "Cậu nào đây? Trốn học hả?" Nam vùng vẫy, Bác càng nắm chặt cổ chân Nam. Sợ quá, Nam khóc toáng lên.
+Bỗng có tiếng cô giáo:
+- Bác nhẹ tay kẻo cháu đau. Cháu này là học sinh lớp tôi.
+Cô nhẹ nhàng kéo Nam lùi lại và đỡ em ngồi dậy. Cô phủi đất cát lầm lem trên người Nam và đưa em về lớp.
+Vừa đau, vừa xấu hổ, Nam bật khóc. Cô xoa đầu Nam và gọi Minh đang thập thò ở cửa lớp vào, nghiêm giọng hỏi:
+- Từ nay các em có trốn học đi chơi nữa không?
+Hai em cùng đáp:
+- Thưa cô, không ạ. Chúng em xin lỗi cô.
+Cô hài lòng, bảo hai em về chỗ rồi tiếp tục giảng bài. 
+(Theo Nguyễn Văn Thịnh)`,
+            questions: [
+                { q: "Câu 1: Giờ ra chơi, Minh đã rủ Nam làm việc gì?", options: [{ text: "Ra sân trường chơi đá bóng.", correct: false }, { text: "Ra ngoài phố xem gánh xiếc.", correct: true }, { text: "Đến thư viện đọc sách.", correct: false }, { text: "Ở lại trong lớp ôn bài.", correct: false }], note: "\"Ngoài phố có gánh xiếc, bọn mình ra xem đi!\"" },
+                { q: "Câu 2: Nghe lời rủ rê của Minh, Nam có thái độ như thế nào?", options: [{ text: "Nam từ chối ngay lập tức.", correct: false }, { text: "Nam không nén nổi tò mò.", correct: true }, { text: "Nam cảm thấy sợ hãi và bỏ đi.", correct: false }, { text: "Nam đi báo với bác bảo vệ.", correct: false }], note: "\"Nghe vậy, Nam không nén nổi tò mò.\"" },
+                { q: "Câu 3: Hai bạn nhỏ đã định trốn ra ngoài trường bằng đường nào?", options: [{ text: "Trèo qua cổng trường đang khóa.", correct: false }, { text: "Xin bác bảo vệ mở cổng.", correct: false }, { text: "Chui qua một chỗ tường thủng.", correct: true }, { text: "Đi nhờ qua cửa nhà bếp.", correct: false }], note: "\"Tớ biết có một chỗ tường thủng.\"" },
+                { q: "Câu 4: Khi Nam đang cố lách qua chỗ tường thủng thì chuyện gì đã xảy ra?", options: [{ text: "Nam bị ngã và rách quần áo.", correct: false }, { text: "Minh kéo Nam lọt ra ngoài thành công.", correct: false }, { text: "Bác bảo vệ vừa tới và nắm chặt hai chân Nam.", correct: true }, { text: "Cô giáo đứng chờ sẵn ở bên ngoài.", correct: false }], note: "\"Đang đến lượt Nam cố lách ra thì bác bảo vệ vừa tới, nắm chặt hai chân em...\"" },
+                { q: "Câu 5: Vì sao Nam lại khóc toáng lên khi bị bác bảo vệ giữ lại?", options: [{ text: "Vì Nam bị mất đồ dùng học tập.", correct: false }, { text: "Vì Nam bị Minh trêu chọc.", correct: false }, { text: "Vì Nam sợ hãi khi bác bảo vệ nắm chặt cổ chân và hỏi.", correct: true }, { text: "Vì Nam tức giận không được xem xiếc.", correct: false }], note: "\"Bác càng nắm chặt cổ chân Nam. Sợ quá, Nam khóc toáng lên.\"" },
+                { q: "Câu 6: Khi thấy Nam bị giữ lại, cô giáo đã nói gì với bác bảo vệ?", options: [{ text: "\"Bác hãy phạt thật nặng em học sinh này.\"", correct: false }, { text: "\"Bác nhẹ tay kẻo cháu đau. Cháu này là học sinh lớp tôi.\"", correct: true }, { text: "\"Bác đưa em này lên văn phòng ban giám hiệu.\"", correct: false }, { text: "\"Bác thả em ra để em tự chạy về lớp.\"", correct: false }], note: "\"Bác nhẹ tay kẻo cháu đau. Cháu này là học sinh lớp tôi.\"" },
+                { q: "Câu 7: Sau khi kéo Nam lùi lại khỏi bức tường, cô giáo đã làm gì cho em?", options: [{ text: "Phạt Nam đứng ở cổng trường.", correct: false }, { text: "Nhẹ nhàng đỡ em ngồi dậy, phủi đất cát lầm lem và đưa em về lớp.", correct: true }, { text: "Quát mắng Nam ngay tại chỗ.", correct: false }, { text: "Gọi bố mẹ Nam đến trường ngay lập tức.", correct: false }], note: "\"Cô nhẹ nhàng kéo Nam lùi lại và đỡ em ngồi dậy. Cô phủi đất cát lầm lem trên người Nam và đưa em về lớp.\"" },
+                { q: "Câu 8: Về đến lớp, cô giáo đã có hành động và câu hỏi như thế nào đối với hai em?", options: [{ text: "Cô phạt hai em đứng ở cuối lớp cho đến hết giờ.", correct: false }, { text: "Cô xoa đầu Nam, gọi Minh vào và nghiêm giọng hỏi: \"Từ nay các em có trốn học đi chơi nữa không?\"", correct: true }, { text: "Cô cho hai em về chỗ ngay mà không hỏi gì thêm.", correct: false }, { text: "Cô yêu cầu hai em viết bản kiểm điểm.", correct: false }], note: "\"Cô xoa đầu Nam và gọi Minh... nghiêm giọng hỏi: Từ nay các em có trốn học đi chơi nữa không?\"" },
+                { q: "Câu 9: Minh và Nam đã thể hiện thái độ ra sao trước lời hỏi của cô giáo?", options: [{ text: "Cả hai im lặng không nhận lỗi.", correct: false }, { text: "Minh đổ lỗi cho Nam rủ rê trước.", correct: false }, { text: "Cả hai cùng đáp: \"Thưa cô, không ạ. Chúng em xin lỗi cô.\"", correct: true }, { text: "Nam khóc to và chạy ra khỏi lớp.", correct: false }], note: "\"Hai em cùng đáp: Thưa cô, không ạ. Chúng em xin lỗi cô.\"" },
+                { q: "Câu 10: Tên bài văn \"Người mẹ hiền\" muốn nói đến ai và thể hiện điều gì?", options: [{ text: "Nói về cô giáo, thể hiện tình yêu thương, sự chăm sóc dịu dàng và uốn nắn nghiêm khắc của cô dành cho học sinh như một người mẹ.", correct: true }, { text: "Nói về người mẹ ở nhà của Nam luôn nhắc em chăm học.", correct: false }, { text: "Nói về bác bảo vệ vì bác đã giữ Nam lại không cho trốn học.", correct: false }, { text: "Nói về người bán hàng ở gánh xiếc ngoài phố.", correct: false }], note: "Cô giáo vừa che chở, chăm sóc dịu dàng vừa nghiêm khắc uốn nắn học sinh nên được ví như \"người mẹ hiền\"." }
+            ]
+        },
+        {
+            title: "Bài số 2: Tình bạn",
+            passage: `Tối hôm ấy, mẹ đi vắng, dặn Cún trông nhà không được đi đâu. Chợt Cún nghe có tiếng kêu ngoài sân:
+- Cứu tôi với!
+Thì ra Cáo già đã tóm được Gà con tội nghiệp.
+Cún con sợ Cáo nhưng lại rất thương Gà con. Cún nảy ra một kế. Cậu đội mũ sư tử lên đầu rồi hùng dũng tiến ra sân. Cáo già trông thấy hoảng quá, buông ngay Gà con để chạy thoát thân. Móng vuốt của Cáo cào làm Gà con bị thương. Cún liền ôm Gà con, vượt đường xa, vượt đêm tối, chạy một mạch đến nhà bác sĩ Dê núi. Bác sĩ nhanh chóng băng bó vết thương cho Gà con. Gà con run rẩy vì lạnh và đau, Cún liền cởi áo của mình ra đắp cho bạn. Thế là Gà con được cứu sống. Về nhà, Cún kể lại mọi chuyện cho mẹ nghe. Mẹ liền xoa đầu Cún, khen:
+- Con đúng là Cún con dũng cảm! Mẹ rất tự hào về con!
+(Theo Những câu chuyện về tình bạn)`,
+            questions: [
+                { q: "Câu 1: Trước khi đi vắng, mẹ đã dặn Cún con điều gì?", options: [{ text: "Ở nhà học bài và không được xem ti vi.", correct: false }, { text: "Ở nhà trông nhà và không được đi đâu.", correct: true }, { text: "Sang nhà Gà con chơi cùng bạn.", correct: false }, { text: "Đi tìm bác sĩ Dê núi để khám bệnh.", correct: false }], note: "\"Tối hôm ấy, mẹ đi vắng, dặn Cún trông nhà không được đi đâu.\"" },
+                { q: "Câu 2: Khi đang ở nhà một mình, Cún con nghe thấy điều gì ngoài sân?", options: [{ text: "Tiếng mưa rơi rất to.", correct: false }, { text: "Tiếng Cáo già đang gầm hú.", correct: false }, { text: "Tiếng kêu: \"Cứu tôi với!\" của Gà con.", correct: true }, { text: "Tiếng bác sĩ Dê núi gọi cửa.", correct: false }], note: "\"Chợt Cún nghe có tiếng kêu ngoài sân: - Cứu tôi với! Thì ra Cáo già đã tóm được Gà con...\"" },
+                { q: "Câu 3: Chuyện gì nguy hiểm đã xảy ra với Gà con?", options: [{ text: "Gà con bị trượt chân ngã xuống hố.", correct: false }, { text: "Gà con bị lạc đường trong đêm tối.", correct: false }, { text: "Gà con bị Cáo già tóm được.", correct: true }, { text: "Gà con bị mất chiếc áo ấm.", correct: false }], note: "\"Thì ra Cáo già đã tóm được Gà con tội nghiệp.\"" },
+                { q: "Câu 4: Để dọa Cáo già cứu bạn, Cún con đã nảy ra kế gì?", options: [{ text: "Cún con đội mũ sư tử lên đầu rồi hùng dũng tiến ra sân.", correct: true }, { text: "Cún con cầm gậy xông ra đánh Cáo già.", correct: false }, { text: "Cún con gọi to nhờ bác sĩ Dê núi đến giúp.", correct: false }, { text: "Cún con giả tiếng gầm của hổ để dọa Cáo.", correct: false }], note: "\"Cậu đội mũ sư tử lên đầu rồi hùng dũng tiến ra sân.\"" },
+                { q: "Câu 5: Thấy Cún con đội mũ sư tử tiến ra, Cáo già phản ứng ra sao?", options: [{ text: "Cáo già đứng lại khiêu chiến với Cún con.", correct: false }, { text: "Cáo già hoảng quá, buông ngay Gà con để chạy thoát thân.", correct: true }, { text: "Cáo già phát hiện ra Cún con nên lao vào tấn công.", correct: false }, { text: "Cáo già cướp lấy chiếc mũ sư tử rồi bỏ chạy.", correct: false }], note: "\"Cáo già trông thấy hoảng quá, buông ngay Gà con để chạy thoát thân.\"" },
+                { q: "Câu 6: Vì sao Cún con phải đưa Gà con đến nhà bác sĩ Dê núi?", options: [{ text: "Vì Gà con bị ốm nặng từ trước.", correct: false }, { text: "Vì móng vuốt của Cáo cào làm Gà con bị thương.", correct: true }, { text: "Vì Gà con muốn đi chơi đêm cùng Cún con.", correct: false }, { text: "Vì Cún con muốn khoe chiếc mũ sư tử với bác sĩ.", correct: false }], note: "\"Móng vuốt của Cáo cào làm Gà con bị thương. Cún liền ôm Gà con... chạy một mạch đến nhà bác sĩ Dê núi.\"" },
+                { q: "Câu 7: Trên đường đi và tại nhà bác sĩ, Cún con đã có hành động ấm áp nào dành cho Gà con?", options: [{ text: "Cún con nhường mũ sư tử cho Gà con đội.", correct: false }, { text: "Cún con cởi áo của mình ra đắp cho Gà con khi thấy bạn run rẩy vì lạnh và đau.", correct: true }, { text: "Cún con mua thức ăn ngon cho Gà con ăn.", correct: false }, { text: "Cún con hát cho Gà con nghe để quên đi nỗi đau.", correct: false }], note: "\"Gà con run rẩy vì lạnh và đau, Cún liền cởi áo của mình ra đắp cho bạn.\"" },
+                { q: "Câu 8: Khi về nhà kể lại mọi chuyện cho mẹ nghe, Cún con được mẹ khen như thế nào?", options: [{ text: "\"Con đúng là một chú Cún thông minh nhất làng!\"", correct: false }, { text: "\"Con đúng là Cún con dũng cảm! Mẹ rất tự hào về con!\"", correct: true }, { text: "\"Con thật là biết nghe lời mẹ dặn khi ở nhà!\"", correct: false }, { text: "\"Con thật giỏi vì đã đuổi được Cáo già!\"", correct: false }], note: "\"Mẹ liền xoa đầu Cún, khen: - Con đúng là Cún con dũng cảm! Mẹ rất tự hào về con!\"" },
+                { q: "Câu 9: Chi tiết Cún con vượt đường xa, vượt đêm tối đưa Gà con đi chữa bệnh và cởi áo đắp cho bạn thể hiện phẩm chất gì của Cún?", options: [{ text: "Sự nhanh nhẹn và thích đi ra ngoài vào ban đêm.", correct: false }, { text: "Tình cảm dũng cảm, nhân hậu và hết lòng vì bạn bè.", correct: true }, { text: "Sự vâng lời tuyệt đối đối với mẹ.", correct: false }, { text: "Tính cẩn thận và chu đáo trong công việc.", correct: false }], note: "Cún con không chỉ dũng cảm dọa Cáo mà còn rất chu đáo, yêu thương bạn khi chăm sóc Gà con." },
+                { q: "Câu 10: Câu chuyện \"Tình bạn\" gửi đến chúng ta bài học ý nghĩa gì?", options: [{ text: "Luôn nhớ mang theo mũ sư tử mỗi khi đi ra ngoài sân.", correct: false }, { text: "Phải cẩn thận không để Cáo già bắt gặp khi đi chơi đêm.", correct: false }, { text: "Khi bạn bè gặp nguy hiểm, khó khăn, chúng ta cần dũng cảm, mưu trí và sẵn sàng giúp đỡ, chăm sóc lẫn nhau.", correct: true }, { text: "Chỉ nên giúp đỡ bạn bè khi có sự đồng ý của cha mẹ.", correct: false }], note: "Câu chuyện tôn vinh tình bạn đẹp, lòng dũng cảm và sự đùm bọc lẫn nhau lúc khó khăn." }
+            ]
+        },
+        {
+            title: "Bài số 3: Hoa cỏ sân trường",
+            passage: `Sân trường tôi chạy dài giữa hai dãy lớp học. Trên đó, bước chân của thầy cô xen giữa những bước tinh nghịch của các bạn nhỏ. Sát hàng rào là một thế giới của những cây đuôi lươn dáng mềm, lá dài như những dải lụa. Cạnh đấy, những bụi cỏ may nở những cánh hoa li ti. Hàng xóm của hoa là những bụi cỏ đã kết từng hạt nhỏ như hạt bụi.
+Hoa và cỏ đứng bên nhau hiền lành nhìn các bạn nhỏ chạy nhảy, nô đùa. Thỉnh thoảng, đám hoa cỏ cũng rung nhè nhẹ khi một cơn gió tràn qua. Rồi cơn gió lớn hơn, đám cỏ nghiêng ngả xô vào nhau. Những hạt giống nhỏ theo gió bay đi. Gió qua rồi, đám cỏ quay trở lại trật tự hiền lành. Nhìn sâu dưới chân có thấy được cả những mầm non nhỏ như những chú kiến đang ngơ ngác trước những bước chân học trò tung tăng đùa giỡn.
+(Võ Diệu Thanh)`,
+            questions: [
+                { q: "Câu 1: Sân trường của các bạn nhỏ nằm ở vị trí nào?", options: [{ text: "Nằm ở phía trước cổng trường.", correct: false }, { text: "Chạy dài giữa hai dãy lớp học.", correct: true }, { text: "Nằm ở sau khu nhà thể chất.", correct: false }, { text: "Bao quanh một khu vườn cây ăn quả.", correct: false }], note: "\"Sân trường tôi chạy dài giữa hai dãy lớp học.\"" },
+                { q: "Câu 2: Trên sân trường có sự xuất hiện của những bước chân nào?", options: [{ text: "Bước chân của các vị phụ huynh và thầy cô.", correct: false }, { text: "Bước chân của thầy cô xen giữa những bước tinh nghịch của các bạn nhỏ.", correct: true }, { text: "Bước chân của bác bảo vệ và cô lao công.", correct: false }, { text: "Bước chân của các anh chị cựu học sinh.", correct: false }], note: "\"Trên đó, bước chân của thầy cô xen giữa những bước tinh nghịch của các bạn nhỏ.\"" },
+                { q: "Câu 3: Sát hàng rào, lá của những cây đuôi lươn được so sánh với hình ảnh nào?", options: [{ text: "Như những chiếc quạt xòe rộng.", correct: false }, { text: "Như những dải lụa.", correct: true }, { text: "Như những ngọn nến nhỏ.", correct: false }, { text: "Như những cánh bướm chập chao.", correct: false }], note: "\"Sát hàng rào là một thế giới của những cây đuôi lươn dáng mềm, lá dài như những dải lụa.\"" },
+                { q: "Câu 4: Cạnh cây đuôi lươn, loài cây nào được miêu tả \"nở những cánh hoa li ti\"?", options: [{ text: "Bụi cỏ may.", correct: true }, { text: "Cây hoa phượng.", correct: false }, { text: "Cây đuôi lươn.", correct: false }, { text: "Bụi hoa mười giờ.", correct: false }], note: "\"Cạnh đấy, những bụi cỏ may nở những cánh hoa li ti.\"" },
+                { q: "Câu 5: \"Hàng xóm\" của hoa cỏ may có đặc điểm gì nổi bật?", options: [{ text: "Có những bông hoa màu vàng rực rỡ.", correct: false }, { text: "Đã kết từng hạt nhỏ như hạt bụi.", correct: true }, { text: "Có thân cây cao lớn vượt qua hàng rào.", correct: false }, { text: "Đã bị héo khô theo thời gian.", correct: false }], note: "\"Hàng xóm của hoa là những bụi cỏ đã kết từng hạt nhỏ như hạt bụi.\"" },
+                { q: "Câu 6: Khi một cơn gió nhẹ tràn qua, đám hoa cỏ có phản ứng ra sao?", options: [{ text: "Rung nhè nhẹ.", correct: true }, { text: "Tỏa hương thơm ngát.", correct: false }, { text: "Nghiêng ngả xô vào nhau.", correct: false }, { text: "Rụng hết những cánh hoa.", correct: false }], note: "\"Thỉnh thoảng, đám hoa cỏ cũng rung nhè nhẹ khi một cơn gió tràn qua.\"" },
+                { q: "Câu 7: Khi cơn gió lớn hơn tràn qua, điều gì đã xảy ra với đám cỏ và những hạt giống?", options: [{ text: "Đám cỏ đứng yên không di chuyển.", correct: false }, { text: "Đám cỏ nghiêng ngả xô vào nhau và những hạt giống nhỏ theo gió bay đi.", correct: true }, { text: "Đám cỏ bị bật gốc khỏi mặt đất.", correct: false }, { text: "Các hạt giống rơi ngay xuống gốc cây.", correct: false }], note: "\"Rồi cơn gió lớn hơn, đám cỏ nghiêng ngả xô vào nhau. Những hạt giống nhỏ theo gió bay đi.\"" },
+                { q: "Câu 8: Sau khi gió qua đi, đám cỏ trở lại trạng thái như thế nào?", options: [{ text: "Nằm rạp hẳn xuống mặt đất không thể đứng dậy.", correct: false }, { text: "Quay trở lại trật tự hiền lành.", correct: true }, { text: "Biến mất hoàn toàn trên sân trường.", correct: false }, { text: "Đột nhiên chuyển thành màu vàng khô.", correct: false }], note: "\"Gió qua rồi, đám cỏ quay trở lại trật tự hiền lành.\"" },
+                { q: "Câu 9: Những mầm non nhỏ dưới chân được tác giả so sánh với hình ảnh nào?", options: [{ text: "Nhỏ như những dải lụa mềm mại.", correct: false }, { text: "Nhỏ như những hạt bụi.", correct: false }, { text: "Nhỏ như những chú kiến đang ngơ ngác.", correct: true }, { text: "Nhỏ như những cánh hoa li ti.", correct: false }], note: "\"Nhìn sâu dưới chân có thấy được cả những mầm non nhỏ như những chú kiến đang ngơ ngác...\"" },
+                { q: "Câu 10: Bài văn \"Hoa cỏ sân trường\" mang đến cho em cảm nhận gì về không gian thiên nhiên nơi sân trường?", options: [{ text: "Hiền lành, sinh động, thanh bình và gắn bó gần gũi với thầy cô, học sinh.", correct: true }, { text: "Ồn ào, vội vã và tràn ngập tiếng động lạ.", correct: false }, { text: "U buồn, hoang vắng và không có bóng người.", correct: false }, { text: "Cứng cỏi, dũng cảm chống lại bão gió.", correct: false }], note: "Thiên nhiên cây cỏ được miêu tả rất hiền lành, sinh động và hòa cùng hoạt động đùa giỡn của học sinh." }
+            ]
+        },
+        {
+            title: "Bài số 4: Con heo đất",
+            passage: `Tôi đang mong bố mua cho tôi một con rô bốt. Nhưng bố lại mang về một con heo đất. Bố chỉ vào cái khe trên lưng nó, bảo:
+- Con cho heo ăn nhé! Con lớn rồi, nên học cách tiết kiệm.
+Từ đó, mỗi lần bố mẹ cho tiền ăn quà, mua sách, có chút tiền lẻ thừa ra, tôi lại được gửi heo giữ giúp. Tết đến, có tiền mừng tuổi, tôi cùng dành cho heo luôn. Bố mẹ bảo:
+- Chừng nào bụng con heo đầy tiền, con sẽ đập con heo ra, lấy tiền mua rô bốt.
+Thật ra con heo cũng dễ thương. Mũi nó mát lạnh và nó mỉm cười khi tôi cho tiền vào lưng nó. Nó mỉm cười cả khi tôi chẳng có đồng nào. Tôi thực sự yêu thương nó.
+Thấm thoắt một năm đã trôi qua. Một hôm, bố tôi vào phòng, lật con heo, lắc mạnh và bảo:
+- Bụng nó đầy ứ rồi. Con đập vỡ nó được rồi đấy!
+Tôi sao nỡ làm vậy! Tôi nói với bố:
+- Con không cần rô bốt nữa!
+Rồi tôi năn nỉ bố mẹ cho giữ lại con heo. Cuối cùng, bố mẹ cũng chiều ý tôi. Thế là con heo đất còn làm bạn với tôi thêm một thời gian nữa.
+Theo ÉT-GA KE-RÉT (Hoàng Ngọc Tuấn dịch)`,
+            questions: [
+                { q: "Câu 1: Ban đầu, bạn nhỏ mong muốn bố mua cho món đồ chơi nào?", options: [{ text: "Một cuốn sách tranh.", correct: false }, { text: "Một con rô bốt.", correct: true }, { text: "Một con heo đất.", correct: false }, { text: "Một chiếc xe ô tô điều khiển.", correct: false }], note: "\"Tôi đang mong bố mua cho tôi một con rô bốt.\"" },
+                { q: "Câu 2: Bố đã không mua rô bốt mà mang đồ vật nào về cho bạn nhỏ?", options: [{ text: "Một chiếc gấu bông.", correct: false }, { text: "Một con heo đất.", correct: true }, { text: "Một chiếc hộp quà.", correct: false }, { text: "Một chiếc cặp sách mới.", correct: false }], note: "\"Nhưng bố lại mang về một con heo đất.\"" },
+                { q: "Câu 3: Khi trao con heo đất cho bạn nhỏ, bố đã dạy em điều gì?", options: [{ text: "Học cách tự làm đồ chơi.", correct: false }, { text: "Học cách chăm sóc vật nuôi.", correct: false }, { text: "Học cách tiết kiệm tiền.", correct: true }, { text: "Học cách chia sẻ đồ chơi với bạn.", correct: false }], note: "\"Con lớn rồi, nên học cách tiết kiệm.\"" },
+                { q: "Câu 4: Bạn nhỏ đã dành những khoản tiền nào để cho heo đất \"ăn\"?", options: [{ text: "Tiền lẻ thừa ra khi mua quà, mua sách và tiền mừng tuổi Tết.", correct: true }, { text: "Tiền do bạn nhỏ tự đi làm kiếm được.", correct: false }, { text: "Tiền thưởng học sinh giỏi cuối năm.", correct: false }, { text: "Tiền bạn nhỏ nhặt được trên đường.", correct: false }], note: "\"mỗi lần bố mẹ cho tiền ăn quà, mua sách, có chút tiền lẻ thừa ra... Tết đến, có tiền mừng tuổi, tôi cùng dành cho heo luôn.\"" },
+                { q: "Câu 5: Con heo đất có những chi tiết, đặc điểm nào rất dễ thương?", options: [{ text: "Đôi tai to vẫy vẫy và cái đuôi cong.", correct: false }, { text: "Mũi mát lạnh và luôn mỉm cười.", correct: true }, { text: "Bộ lông mềm mại và mắt sáng long lanh.", correct: false }, { text: "Biết phát ra tiếng kêu ủ ỉ khi cho tiền vào.", correct: false }], note: "\"Mũi nó mát lạnh và nó mỉm cười khi tôi cho tiền vào lưng nó.\"" },
+                { q: "Câu 6: Thấm thoắt bao nhiêu thời gian trôi qua thì bụng con heo đất đầy ứ tiền?", options: [{ text: "Một tuần.", correct: false }, { text: "Một tháng.", correct: false }, { text: "Một năm.", correct: true }, { text: "Hai năm.", correct: false }], note: "\"Thấm thoắt một năm đã trôi qua.\"" },
+                { q: "Câu 7: Khi thấy bụng heo đất đã đầy tiền, bố bảo bạn nhỏ làm gì?", options: [{ text: "Đập vỡ heo đất để lấy tiền mua rô bốt.", correct: true }, { text: "Mang heo đất ra ngân hàng gửi.", correct: false }, { text: "Mang heo đất đi tặng cho bạn khác.", correct: false }, { text: "Mua thêm một con heo đất mới.", correct: false }], note: "\"Bụng nó đầy ứ rồi. Con đập vỡ nó được rồi đấy!\"" },
+                { q: "Câu 8: Khi nghe bố bảo đập vỡ heo đất, bạn nhỏ đã có phản ứng như thế nào?", options: [{ text: "Vui vẻ lấy búa đập vỡ heo đất ngay lập tức.", correct: false }, { text: "Không nỡ đập vỡ, nói không cần rô bốt nữa và năn nỉ bố mẹ cho giữ lại heo đất.", correct: true }, { text: "Khóc to vì tiền trong heo đất vẫn chưa đủ.", correct: false }, { text: "Đồng ý đập heo đất nhưng đòi bố mua thêm đồ chơi khác.", correct: false }], note: "\"Tôi sao nỡ làm vậy! Tôi nói với bố: - Con không cần rô bốt nữa! Rồi quilt năn nỉ bố mẹ cho giữ lại con heo.\"" },
+                { q: "Câu 9: Vì sao bạn nhỏ lại năn nỉ bố mẹ cho giữ lại con heo đất thay vì đập vỡ để mua rô bốt?", options: [{ text: "Vì bạn nhỏ sợ tiếng nổ to khi đập heo.", correct: false }, { text: "Vì bạn nhỏ đã thực sự yêu thương và coi con heo đất như một người bạn.", correct: true }, { text: "Vì bạn nhỏ không còn thích chơi rô bốt nữa.", correct: false }, { text: "Vì bố mẹ không cho phép mua rô bốt.", correct: false }], note: "\"Tôi thực sự yêu thương nó... Thế là con heo đất còn làm bạn với tôi thêm một thời gian nữa.\"" },
+                { q: "Câu 10: Qua câu chuyện \"Con heo đất\", em rút ra được bài học ý nghĩa gì?", options: [{ text: "Biết học cách tiết kiệm tiền và biết yêu thương, trân trọng những đồ vật thân quen xung quanh.", correct: true }, { text: "Luôn đòi bố mẹ mua đồ chơi đắt tiền.", correct: false }, { text: "Không nên chơi heo đất vì dễ bị vỡ.", correct: false }, { text: "Chỉ nên giữ tiền tiết kiệm chứ không được mua đồ dùng học tập.", correct: false }], note: "Câu chuyện gửi gắm bài học về tính tiết kiệm và tình cảm yêu thương với đồ vật làm bạn cùng em." }
+            ]
+        }
+    ];
+
+    let currentPassageObj = null;
+    let timerInterval = null;
+    let timeLeft = 30 * 60;
+    let startTimeStr = "";
+    let maBaiLamCode = "";
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startQuiz() {
+        const randomIndex = Math.floor(Math.random() * dataBank.length);
+        let selected = dataBank[randomIndex];
+        
+        // Tạo mã bài làm theo yêu cầu: TIEN_[bài đọc số]_[dãy số ngẫu nhiên]
+        let baiSoID = randomIndex + 1;
+        let randomNum = Math.floor(10000 + Math.random() * 90000);
+        maBaiLamCode = `TIEN_${baiSoID}_${randomNum}`;
+
+        currentPassageObj = {
+            title: selected.title,
+            passage: selected.passage,
+            questions: shuffleArray(selected.questions).map(q => {
+                return {
+                    q: q.q,
+                    options: shuffleArray(q.options),
+                    note: q.note
+                };
+            })
+        };
+
+        document.getElementById('lbl-test-name').innerText = currentPassageObj.title;
+        document.getElementById('main-title').innerText = currentPassageObj.title;
+        document.getElementById('quiz-badge-title').innerText = currentPassageObj.title;
+        document.getElementById('passage-heading').innerText = "Đọc bài văn: " + currentPassageObj.title;
+        document.getElementById('passage-text').innerText = currentPassageObj.passage;
+
+        let container = document.getElementById('questions-container');
+        container.innerHTML = "";
+
+        currentPassageObj.questions.forEach((qObj, qIndex) => {
+            let optionsHTML = "";
+            const labels = ['A', 'B', 'C', 'D'];
+            qObj.options.forEach((opt, optIndex) => {
+                let optId = `q${qIndex}_opt${optIndex}`;
+                optionsHTML += `
+                    <label class="option-label" for="${optId}">
+                        <input type="radio" id="${optId}" name="question_${qIndex}" value="${optIndex}">
+                        <span><strong>${labels[optIndex]}.</strong> ${opt.text}</span>
+                    </label>
+                `;
+            });
+
+            container.innerHTML += `
+                <div class="question-card">
+                    <div class="question-title">Câu ${qIndex + 1}: ${qObj.q.replace(/^Câu \d+:\s*/, '')}</div>
+                    <div class="options-grid">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('screen-welcome').classList.remove('active');
+        document.getElementById('screen-quiz').classList.add('active');
+
+        let now = new Date();
+        startTimeStr = now.toLocaleTimeString('vi-VN') + " (" + now.toLocaleDateString('vi-VN') + ")";
+
+        timeLeft = 30 * 60;
+        clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        document.getElementById('timer').innerText = 
+            (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert("Đã hết thời gian làm bài! Hệ thống sẽ tự động nộp bài cho Cẩm Tiên.");
+            submitQuiz();
+        }
+        timeLeft--;
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+
+        let now = new Date();
+        let endTimeStr = now.toLocaleTimeString('vi-VN') + " (" + now.toLocaleDateString('vi-VN') + ")";
+        let totalSecondsUsed = (30 * 60) - (timeLeft < 0 ? 0 : timeLeft);
+        let usedMin = Math.floor(totalSecondsUsed / 60);
+        let usedSec = totalSecondsUsed % 60;
+        let totalTimeFormatted = usedMin + " phút " + usedSec + " giây";
+
+        let score = 0;
+        let historyHTML = "";
+        const labels = ['A', 'B', 'C', 'D'];
+        let chiTietGuiDi = [];
+
+        currentPassageObj.questions.forEach((qObj, qIndex) => {
+            let radios = document.getElementsByName(`question_${qIndex}`);
+            let selectedOptIndex = -1;
+            for (let r of radios) {
+                if (r.checked) {
+                    selectedOptIndex = parseInt(r.value);
+                    break;
+                }
+            }
+
+            let correctOptIndex = -1;
+            qObj.options.forEach((opt, idx) => {
+                if (opt.correct) correctOptIndex = idx;
+            });
+
+            let isCorrect = (selectedOptIndex === correctOptIndex);
+            if (isCorrect) score++;
+
+            let selectedText = selectedOptIndex !== -1 ? `${labels[selectedOptIndex]}. ${qObj.options[selectedOptIndex].text}` : "Chưa chọn đáp án";
+            let correctText = `${labels[correctOptIndex]}. ${qObj.options[correctOptIndex].text}`;
+            let diemMoiCau = isCorrect ? (10 / currentPassageObj.questions.length).toFixed(1) : "0";
+
+            // Đóng gói dữ liệu chi tiết từng câu
+            chiTietGuiDi.push({
+                cauSo: `Câu ${qIndex + 1}`,
+                noiDungCauHoi: qObj.q.replace(/^Câu \d+:\s*/, ''),
+                dapAnDung: correctText,
+                thiSinhChon: selectedText,
+                ketQua: isCorrect ? "Đúng" : "Sai",
+                diemSoCau: diemMoiCau
+            });
+
+            historyHTML += `
+                <div class="history-card ${isCorrect ? 'correct' : 'incorrect'}">
+                    <div class="history-q-title">Câu ${qIndex + 1}: ${qObj.q.replace(/^Câu \d+:\s*/, '')}</div>
+                    <div class="history-ans-info">👤 <strong>Cẩm Tiên chọn:</strong> ${selectedText}</div>
+                    <div class="history-ans-info">✅ <strong>Đáp án đúng:</strong> ${correctText}</div>
+                    <div class="history-ans-info">📝 <strong>Nhận xét:</strong> ${isCorrect ? '<span style="color: #27AE60; font-weight: bold;">Đúng 🎯</span>' : '<span style="color: #C0392B; font-weight: bold;">Sai ❌</span>'}</div>
+                    <div class="explanation-box">
+                        💡 <strong>Lời giải / Trích dẫn:</strong> ${qObj.note}
+                    </div>
+                </div>
+            `;
+        });
+
+        let diemTongKet = ((score / currentPassageObj.questions.length) * 10).toFixed(1);
+
+        document.getElementById('res-score').innerText = `${score} / ${currentPassageObj.questions.length} câu`;
+        document.getElementById('res-test-name').innerText = currentPassageObj.title;
+        document.getElementById('res-time-start').innerText = startTimeStr;
+        document.getElementById('res-time-end').innerText = endTimeStr;
+        document.getElementById('res-total-time').innerText = totalTimeFormatted;
+
+        let comment = "Xuất sắc quá Cẩm Tiên ơi! Con hoàn thành rất tốt bài đọc hiểu! 🎉";
+        if (score < 5) {
+            comment = "Cẩm Tiên cố gắng đọc kỹ lại bài văn và luyện tập thêm nhé! 💪";
+        } else if (score < 8) {
+            comment = "Con làm bài khá tốt rồi, hãy tiếp tục phát huy nhé Cẩm Tiên! 👍";
+        }
+        document.getElementById('res-comment').innerText = comment;
+        document.getElementById('history-container').innerHTML = historyHTML;
+
+        document.getElementById('screen-quiz').classList.remove('active');
+        document.getElementById('screen-result').classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Tự động đẩy dữ liệu lên Google Sheets ngầm
+        if (WEB_APP_URL && WEB_APP_URL !== "DÁN_URL_WEB_APP_CỦA_BẠN_VÀO_ĐÂY") {
+            let payload = {
+                maBaiLam: maBaiLamCode,
+                hocSinh: "Cẩm Tiên",
+                tenBaiDoc: currentPassageObj.title,
+                gioVaoLam: startTimeStr,
+                gioNopBai: endTimeStr,
+                tongThoiGian: totalTimeFormatted,
+                soCauDung: `${score} / ${currentPassageObj.questions.length}`,
+                diemSo: diemTongKet,
+                chiTiet: chiTietGuiDi
+            };
+
+            fetch(WEB_APP_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).catch(err => console.error("Lỗi gửi dữ liệu lên Google Sheets:", err));
+        }
+    }
+</script>
+
+</body>
+</html>
